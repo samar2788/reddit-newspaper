@@ -1,20 +1,22 @@
 /**
- * Vercel serverless function — proxies Reddit API requests server-side,
- * bypassing browser CORS restrictions on production deployments.
- *
- * Handles: /api/reddit?path=/r/news/hot.json&limit=30&...
+ * Vercel Edge Function — proxies Reddit API requests.
+ * Edge runtime runs on CDN edge nodes (not datacenter IPs),
+ * so Reddit does not block these requests.
  */
 
-// api.reddit.com is the dedicated API endpoint — less likely to be blocked from datacenters
-const REDDIT_BASE = 'https://api.reddit.com';
+export const config = { runtime: 'edge' };
 
-export default async function handler(req, res) {
-  // Use WHATWG URL API to parse query — avoids deprecated url.parse() (DEP0169)
-  const { searchParams } = new URL(req.url, 'http://localhost');
+const REDDIT_BASE = 'https://www.reddit.com';
+
+export default async function handler(req) {
+  const { searchParams } = new URL(req.url);
   const path = searchParams.get('path');
 
   if (!path) {
-    return res.status(400).json({ error: 'Missing required query param: path' });
+    return new Response(JSON.stringify({ error: 'Missing required query param: path' }), {
+      status: 400,
+      headers: { 'Content-Type': 'application/json' },
+    });
   }
 
   const redditUrl = new URL(`${REDDIT_BASE}${path}`);
@@ -25,24 +27,28 @@ export default async function handler(req, res) {
   try {
     const response = await fetch(redditUrl.toString(), {
       headers: {
-        // Reddit requires a descriptive User-Agent for API access
-        'User-Agent': 'web:reddit-newspaper:v1.0.0 (vercel serverless)',
+        'User-Agent': 'web:reddit-newspaper:v1.0.0 (vercel edge)',
         Accept: 'application/json',
       },
     });
 
     const text = await response.text();
 
-    // Detect HTML block/captcha page from Reddit
     if (text.trimStart().startsWith('<')) {
-      return res.status(503).json({
-        error: 'Reddit blocked the request from this server. Try again shortly.',
-      });
+      return new Response(
+        JSON.stringify({ error: 'Reddit returned an unexpected response. Try again.' }),
+        { status: 503, headers: { 'Content-Type': 'application/json' } }
+      );
     }
 
-    const data = JSON.parse(text);
-    res.status(response.status).json(data);
+    return new Response(text, {
+      status: response.status,
+      headers: { 'Content-Type': 'application/json' },
+    });
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    return new Response(JSON.stringify({ error: err.message }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json' },
+    });
   }
 }
