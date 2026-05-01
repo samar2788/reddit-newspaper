@@ -1,0 +1,101 @@
+.search-bar {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  transition: all 0.2s ease;
+}
+
+.search-bar__inner {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  border: 1.5px solid var(--border);
+  background: var(--paper-white);
+  padding: var(--sp-2) var(--sp-3);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.search-bar__inner:focus-within {
+  border-color: var(--ink);
+  box-shadow: 0 0 0 3px rgba(28, 24, 18, 0.07);
+}
+
+.search-bar--mode-user .search-bar__inner {
+  border-color: var(--accent-user, #7c3aed);
+  box-shadow: 0 0 0 2px rgba(124, 58, 237, 0.1);
+}
+
+.search-bar--mode-subreddit .search-bar__inner {
+  border-color: var(--accent-sub, #1a56b0);
+  box-shadow: 0 0 0 2px rgba(26, 86, 176, 0.1);
+}
+
+.search-bar__icon {
+  color: var(--ink-3);
+  flex-shrink: 0;
+  transition: color 0.15s ease;
+}
+
+.search-bar--mode-user .search-bar__icon    { color: var(--accent-user, #7c3aed); }
+.search-bar--mode-subreddit .search-bar__icon { color: var(--accent-sub, #1a56b0); }
+.search-bar--mode-search .search-bar__icon    { color: var(--red); }
+
+.search-bar__input {
+  flex: 1;
+  font-family: var(--font-ui);
+  font-size: var(--fs-base);
+  color: var(--ink);
+  background: transparent;
+  border: none;
+  outline: none;
+  min-width: 0;
+}
+
+.search-bar__input::placeholder {
+  color: var(--ink-4);
+  font-style: italic;
+}
+
+.search-bar__input::-webkit-search-cancel-button { display: none; }
+.search-bar__input::-ms-clear { display: none; }
+
+.search-bar__mode-badge {
+  font-family: var(--font-ui);
+  font-size: var(--fs-2xs);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 2px 7px;
+  border-radius: 2px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.search-bar__mode-badge--user      { background: rgba(124,58,237,0.12); color: #7c3aed; }
+.search-bar__mode-badge--subreddit { background: rgba(26,86,176,0.12);  color: #1a56b0; }
+.search-bar__mode-badge--search    { background: rgba(196,18,48,0.1);   color: var(--red); }
+
+.search-bar__clear {
+  background: none;
+  border: none;
+  color: var(--ink-3);
+  cursor: pointer;
+  padding: 2px;
+  display: flex;
+  align-items: center;
+  transition: color 0.12s ease;
+}
+
+.search-bar__clear:hover { color: var(--red); }
+
+.search-bar__label {
+  font-family: var(--font-ui);
+  font-size: var(--fs-xs);
+  color: var(--ink-3);
+  margin-top: var(--sp-1);
+  letter-spacing: 0.02em;
+}
+
+.search-bar__label strong {
+  color: var(--ink);
+  font-weight: 600;
+}

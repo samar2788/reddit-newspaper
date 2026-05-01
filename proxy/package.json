@@ -1,0 +1,15 @@
+{
+  "name": "reddit-newspaper-proxy",
+  "version": "1.0.0",
+  "description": "Optional CORS proxy for Reddit Newspaper",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "node-fetch": "^3.3.2"
+  }
+}

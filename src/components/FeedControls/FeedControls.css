@@ -1,0 +1,145 @@
+.feed-controls {
+  background: var(--paper-alt);
+  border-bottom: 1px solid var(--border);
+}
+
+.feed-controls__inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: var(--sp-2) var(--gutter);
+  display: flex;
+  align-items: center;
+  gap: var(--sp-4);
+  flex-wrap: wrap;
+}
+
+.feed-controls__group {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+}
+
+.feed-controls__label {
+  font-family: var(--font-ui);
+  font-size: var(--fs-2xs);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  white-space: nowrap;
+}
+
+.feed-controls__chips {
+  display: flex;
+  gap: 2px;
+  flex-wrap: wrap;
+}
+
+/* Custom subreddit input */
+.feed-controls__custom {
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--border);
+  background: var(--paper-white);
+  overflow: hidden;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.feed-controls__custom:focus-within {
+  border-color: var(--ink);
+  box-shadow: 0 0 0 2px rgba(28,24,18,0.07);
+}
+
+.feed-controls__custom-prefix {
+  font-family: var(--font-ui);
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  color: var(--ink-3);
+  padding: 3px 0 3px 8px;
+  letter-spacing: 0.02em;
+}
+
+.feed-controls__custom-input {
+  font-family: var(--font-ui);
+  font-size: var(--fs-xs);
+  color: var(--ink);
+  background: transparent;
+  border: none;
+  outline: none;
+  padding: 3px 6px;
+  width: 130px;
+  min-width: 0;
+}
+
+.feed-controls__custom-input::placeholder {
+  color: var(--ink-4);
+  font-style: italic;
+}
+
+.feed-controls__custom-btn {
+  font-family: var(--font-ui);
+  font-size: var(--fs-2xs);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  background: var(--ink);
+  color: var(--paper);
+  border: none;
+  padding: 4px 9px;
+  cursor: pointer;
+  transition: background 0.15s;
+  align-self: stretch;
+}
+
+.feed-controls__custom-btn:hover { background: var(--red); }
+
+.feed-controls__divider {
+  width: 1px;
+  height: 20px;
+  background: var(--border);
+  flex-shrink: 0;
+}
+
+/* Chips */
+.chip {
+  font-family: var(--font-ui);
+  font-size: var(--fs-xs);
+  font-weight: 500;
+  padding: 3px 10px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--ink-3);
+  cursor: pointer;
+  transition: all 0.12s ease;
+  white-space: nowrap;
+  letter-spacing: 0.02em;
+}
+
+.chip__prefix {
+  font-size: var(--fs-2xs);
+  opacity: 0.6;
+  margin-right: 1px;
+}
+
+.chip:hover:not(.chip--active) {
+  color: var(--ink);
+  border-color: var(--border);
+  background: var(--paper-white);
+}
+
+.chip--active {
+  background: var(--ink);
+  color: var(--paper);
+  border-color: var(--ink);
+}
+
+@media (max-width: 800px) {
+  .feed-controls__custom { order: -1; }
+  .feed-controls__inner { gap: var(--sp-2); }
+}
+
+@media (max-width: 600px) {
+  .feed-controls__inner { gap: var(--sp-2); }
+  .feed-controls__divider { display: none; }
+  .feed-controls__custom-input { width: 100px; }
+}
